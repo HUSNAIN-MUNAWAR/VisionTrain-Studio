@@ -1,0 +1,84 @@
+{
+  "project": {
+    "name": "VisionTrain Studio",
+    "version": "3.0.0-final",
+    "description": "Local computer vision training control center"
+  },
+  "task": "object_detection",
+  "model": {
+    "id": "yolov8n-det",
+    "name": "YOLOv8n Detection",
+    "family": "ultralytics",
+    "weights": "yolov8n.pt",
+    "trainer": "yolo_trainer",
+    "dataset_format": "yolo"
+  },
+  "dataset": {
+    "path": "",
+    "format": "yolo",
+    "yaml": "dataset.yaml",
+    "train_split": 0.8,
+    "val_split": 0.2,
+    "num_classes": null
+  },
+  "training": {
+    "epochs": 50,
+    "batch_size": 8,
+    "image_size": 640,
+    "learning_rate": 0.001,
+    "optimizer": "auto",
+    "workers": 4,
+    "seed": 42,
+    "patience": 20,
+    "precision": "fp32",
+    "checkpoint_interval": 1,
+    "demo_mode": false
+  },
+  "device": {
+    "mode": "cpu",
+    "cuda": false,
+    "gpu_id": 0,
+    "allow_fp16": false
+  },
+  "optimizer": {
+    "name": "auto",
+    "weight_decay": 0.0005,
+    "momentum": 0.9
+  },
+  "scheduler": {
+    "name": "cosine",
+    "enabled": true,
+    "min_lr": 0.00001
+  },
+  "augmentation": {
+    "strength": "medium",
+    "horizontal_flip": true,
+    "color_jitter": false,
+    "random_resized_crop": true
+  },
+  "logging": {
+    "log_interval": 10,
+    "save_metrics_json": true,
+    "live_log_poll_seconds": 1
+  },
+  "output": {
+    "project_name": "visiontrain-runs",
+    "experiment_name": "exp001",
+    "output_dir": "backend/runs"
+  },
+  "export": {
+    "checkpoint": "",
+    "format": "onnx",
+    "precision": "fp32",
+    "opset": 17,
+    "dynamic_batch": true,
+    "image_size": 640,
+    "output_dir": "backend/runs/exports"
+  },
+  "status": {
+    "dataset_valid": false,
+    "model_enabled": false,
+    "ready_to_train": false,
+    "last_error": null
+  }
+}

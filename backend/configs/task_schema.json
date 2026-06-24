@@ -1,0 +1,33 @@
+{
+  "task_schema_version": "3.0.0-final",
+  "tasks": {
+    "object_detection": {
+      "formats": ["yolo", "coco_detection"],
+      "description": "Bounding-box object detection with YOLO or TorchVision COCO-style datasets."
+    },
+    "instance_segmentation": {
+      "formats": ["yolo"],
+      "description": "YOLO polygon instance segmentation. Mask R-CNN is future integration."
+    },
+    "image_classification": {
+      "formats": ["classification_folder"],
+      "description": "ImageFolder classification using Ultralytics or PyTorch/TorchVision/TIMM."
+    },
+    "semantic_segmentation": {
+      "formats": ["semantic_masks"],
+      "description": "Pixel-wise semantic segmentation using image/mask pairs."
+    },
+    "pose_estimation": {
+      "formats": ["yolo"],
+      "description": "YOLO keypoint/pose datasets through Ultralytics."
+    },
+    "anomaly_detection": {
+      "formats": ["anomaly_folder"],
+      "description": "Normal/anomaly folder training using a PyTorch autoencoder."
+    },
+    "ocr_text_detection": {
+      "formats": ["ocr_dataset"],
+      "description": "Future integration hook; no fake OCR training."
+    }
+  }
+}

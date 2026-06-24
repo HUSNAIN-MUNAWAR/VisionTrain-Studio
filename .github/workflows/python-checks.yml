@@ -1,0 +1,36 @@
+name: Python checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install lightweight backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fastapi pydantic psutil pyyaml pillow numpy pandas tqdm scikit-learn
+      - name: Compile Python files
+        run: python -m compileall backend
+      - name: Validate JSON configs
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          for path in pathlib.Path('backend/configs').glob('*.json'):
+              json.loads(path.read_text(encoding='utf-8'))
+              print('valid json:', path)
+          PY
+      - name: Import API without GPU-only packages
+        run: |
+          python - <<'PY'
+          import backend.main
+          print('FastAPI import OK:', backend.main.app.title)
+          PY
+      - name: Trainer mapping check
+        run: python -m backend.trainer.train_router --check-mapping

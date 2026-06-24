@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environments
+.venv/
+venv/
+env/
+.conda/
+
+# Local training outputs
+backend/runs/*
+!backend/runs/.gitkeep
+!backend/runs/exports/
+backend/runs/exports/*
+!backend/runs/exports/.gitkeep
+backend/logs/*
+!backend/logs/.gitkeep
+backend/datasets/*
+!backend/datasets/.gitkeep
+backend/configs/saved/*
+!backend/configs/saved/.gitkeep
+
+# Large model files
+*.pt
+*.pth
+*.onnx
+*.engine
+*.torchscript
+*.openvino
+*.bin
+*.xml
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

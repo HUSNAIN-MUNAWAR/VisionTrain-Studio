@@ -1,0 +1,113 @@
+{
+  "project": "VisionTrain Studio",
+  "version": "3.0.0-final",
+  "generated_at": "2026-06-25",
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "Python files compile",
+      "passed": true,
+      "detail": "27 files compiled"
+    },
+    {
+      "check": "JSON files valid",
+      "passed": true,
+      "detail": "backend/configs/default_config.json, backend/configs/models.json, backend/configs/task_schema.json"
+    },
+    {
+      "check": "FastAPI imports",
+      "passed": true,
+      "detail": "VisionTrain Studio API"
+    },
+    {
+      "check": "Required backend endpoints exist",
+      "passed": true,
+      "detail": "23 endpoints found"
+    },
+    {
+      "check": "Every supported model has trainer",
+      "passed": true,
+      "detail": "All supported models map to real trainer classes"
+    },
+    {
+      "check": "Unsupported models are disabled",
+      "passed": true,
+      "detail": "Future integrations are not marked supported"
+    },
+    {
+      "check": "Frontend references valid API endpoints",
+      "passed": true,
+      "detail": "Frontend references expected endpoints"
+    },
+    {
+      "check": "Start Training blocked if dataset invalid",
+      "passed": true,
+      "detail": "Gate logic present in frontend and backend"
+    },
+    {
+      "check": "GPU mode blocked if CUDA unavailable",
+      "passed": true,
+      "detail": "Frontend/backend CUDA gate present"
+    },
+    {
+      "check": "Hardware compatibility endpoint exists",
+      "passed": true,
+      "detail": "Hardware profile + compatibility endpoints present"
+    },
+    {
+      "check": "Export endpoints exist",
+      "passed": true,
+      "detail": "Export center API present"
+    },
+    {
+      "check": "PowerShell script exists: scripts/start_visiontrain.ps1",
+      "passed": true,
+      "detail": "Non-empty script with strict error behavior"
+    },
+    {
+      "check": "PowerShell script exists: scripts/stop_visiontrain.ps1",
+      "passed": true,
+      "detail": "Non-empty script with strict error behavior"
+    },
+    {
+      "check": "README links screenshots",
+      "passed": true,
+      "detail": "Screenshot markdown links present"
+    },
+    {
+      "check": "Docs folder exists",
+      "passed": true,
+      "detail": "Docs files exist"
+    },
+    {
+      "check": "GitHub workflow exists",
+      "passed": true,
+      "detail": "python-checks.yml present"
+    },
+    {
+      "check": "BAT script present: setup_windows.bat",
+      "passed": true,
+      "detail": "Includes pause/error visibility"
+    },
+    {
+      "check": "BAT script present: run_backend.bat",
+      "passed": true,
+      "detail": "Includes pause/error visibility"
+    },
+    {
+      "check": "BAT script present: run_frontend.bat",
+      "passed": true,
+      "detail": "Includes pause/error visibility"
+    },
+    {
+      "check": "BAT script present: check_gpu.bat",
+      "passed": true,
+      "detail": "Includes pause/error visibility"
+    },
+    {
+      "check": "BAT script present: clean_runs.bat",
+      "passed": true,
+      "detail": "Includes pause/error visibility"
+    }
+  ]
+}

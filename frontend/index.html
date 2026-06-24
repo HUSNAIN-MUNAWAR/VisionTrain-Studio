@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VisionTrain Studio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">VT</div>
+        <div>
+          <h1>VisionTrain</h1>
+          <span>Local AI Training Control Center</span>
+        </div>
+      </div>
+      <nav class="nav" id="nav">
+        <button data-page="overview" class="active">Overview</button>
+        <button data-page="hardware">Hardware</button>
+        <button data-page="dataset">Dataset</button>
+        <button data-page="models">Models</button>
+        <button data-page="train">Train</button>
+        <button data-page="logs">Logs</button>
+        <button data-page="experiments">Experiments</button>
+        <button data-page="export">Export</button>
+        <button data-page="config">Config</button>
+      </nav>
+      <div class="side-status">
+        <span class="dot" id="apiDot"></span>
+        <div>
+          <strong id="apiState">Connecting</strong>
+          <small>127.0.0.1:8000</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="topbar glass">
+        <div>
+          <p class="eyebrow">Portfolio MLOps Product</p>
+          <h2 id="pageTitle">Overview</h2>
+        </div>
+        <div class="top-actions">
+          <label class="switch-pill">
+            <span>CPU</span>
+            <input id="deviceToggle" type="checkbox" />
+            <i></i>
+            <span>GPU</span>
+          </label>
+          <button class="ghost" id="refreshBtn">Refresh</button>
+          <button class="primary" id="startBtn" disabled>Start Training</button>
+        </div>
+      </header>
+
+      <section class="page active" id="page-overview">
+        <div class="hero glass">
+          <div>
+            <p class="eyebrow">Readiness</p>
+            <h3><span id="readinessScore">--</span>% system ready</h3>
+            <p id="readinessText">Hardware, model, dataset, and config must pass before training is enabled.</p>
+          </div>
+          <div class="orb"><span id="trainingStatusHero">idle</span></div>
+        </div>
+        <div class="grid four">
+          <div class="card glass"><span>Dataset</span><strong id="datasetBadge">Not validated</strong><small id="datasetMini">Set dataset path</small></div>
+          <div class="card glass"><span>Model</span><strong id="modelBadge">No model</strong><small id="modelMini">Compatibility pending</small></div>
+          <div class="card glass"><span>Device</span><strong id="deviceBadge">CPU</strong><small id="deviceMini">Safe local mode</small></div>
+          <div class="card glass"><span>Training</span><strong id="statusBadge">idle</strong><small id="statusMini">No active run</small></div>
+        </div>
+        <div class="grid two">
+          <section class="panel glass">
+            <div class="panel-head"><h3>System readiness checklist</h3><span id="checklistState">--</span></div>
+            <div id="readinessList" class="checklist"></div>
+          </section>
+          <section class="panel glass">
+            <div class="panel-head"><h3>Latest terminal logs</h3><button class="ghost small" data-page-shortcut="logs">Open Logs</button></div>
+            <pre class="terminal compact" id="overviewLogs">No active training process.</pre>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-hardware">
+        <div class="grid two">
+          <section class="panel glass hardware-card cpu">
+            <div class="panel-head"><h3>CPU Training Dashboard</h3><span id="cpuModeLabel">active</span></div>
+            <div class="metric-grid" id="cpuMetrics"></div>
+          </section>
+          <section class="panel glass hardware-card gpu">
+            <div class="panel-head"><h3>GPU Training Dashboard</h3><span id="gpuModeLabel">standby</span></div>
+            <div class="metric-grid" id="gpuMetrics"></div>
+          </section>
+        </div>
+        <section class="panel glass">
+          <div class="panel-head"><h3>Hardware capability warnings</h3><span>real backend profile</span></div>
+          <div id="hardwareWarnings" class="warnings"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-dataset">
+        <div class="grid two">
+          <section class="panel glass">
+            <div class="panel-head"><h3>Dataset Selector</h3><span>local path</span></div>
+            <label>Dataset path<input id="datasetPath" placeholder="D:\\datasets\\my_yolo_dataset" /></label>
+            <label>Dataset format<select id="datasetFormat"><option value="yolo">YOLO detection/seg/pose</option><option value="classification_folder">Classification folders</option><option value="semantic_masks">Semantic masks</option><option value="coco_detection">COCO detection</option><option value="anomaly_folder">Anomaly folders</option><option value="ocr_dataset">OCR future hook</option></select></label>
+            <label>YOLO YAML<input id="datasetYaml" placeholder="dataset.yaml" /></label>
+            <button class="primary wide" id="validateBtn">Validate Dataset</button>
+          </section>
+          <section class="panel glass">
+            <div class="panel-head"><h3>Dataset Health</h3><span id="datasetValidState">not validated</span></div>
+            <div class="metric-grid" id="datasetMetrics"></div>
+            <div id="datasetMessages" class="warnings"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-models">
+        <section class="panel glass">
+          <div class="panel-head"><h3>Model Registry Matrix</h3><span id="modelCount">-- models</span></div>
+          <div class="filters">
+            <select id="taskFilter"><option value="all">All tasks</option></select>
+            <select id="statusFilter"><option value="all">All status</option><option value="supported">Supported</option><option value="future">Future</option></select>
+          </div>
+          <div class="model-grid" id="modelGrid"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-train">
+        <div class="grid two">
+          <section class="panel glass">
+            <div class="panel-head"><h3>Training Control Panel</h3><span id="trainGate">blocked</span></div>
+            <div class="form-grid">
+              <label>Epochs<input id="epochs" type="number" min="1" value="50" /></label>
+              <label>Batch<input id="batchSize" type="number" min="1" value="8" /></label>
+              <label>Image size<input id="imageSize" type="number" min="64" value="640" /></label>
+              <label>Learning rate<input id="learningRate" type="number" step="0.0001" value="0.001" /></label>
+              <label>Optimizer<select id="optimizer"><option>auto</option><option>adamw</option><option>sgd</option></select></label>
+              <label>Scheduler<select id="scheduler"><option>cosine</option><option>step</option><option>none</option></select></label>
+              <label>Workers<input id="workers" type="number" min="0" value="4" /></label>
+              <label>Seed<input id="seed" type="number" value="42" /></label>
+              <label>Precision<select id="precision"><option value="fp32">FP32</option><option value="fp16">FP16</option></select></label>
+              <label>Experiment<input id="experimentName" value="exp001" /></label>
+            </div>
+            <div class="actions-row">
+              <button class="primary" id="startBtn2" disabled>Start Real Training</button>
+              <button class="danger" id="stopBtn">Stop</button>
+              <button class="ghost" id="saveConfigBtn">Save Config</button>
+            </div>
+          </section>
+          <section class="panel glass">
+            <div class="panel-head"><h3>Training Command Preview</h3><button class="ghost small" id="copyTrainCmd">Copy</button></div>
+            <pre class="terminal" id="trainCommand">python -m backend.trainer.train_router --config backend/configs/saved/current_config.json</pre>
+            <div id="trainBlockers" class="warnings"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-logs">
+        <section class="panel glass fullheight">
+          <div class="panel-head"><h3>Live Training Terminal</h3><span id="logStatus">polling every 1s</span></div>
+          <pre class="terminal tall" id="liveLogs">No active training process.</pre>
+        </section>
+      </section>
+
+      <section class="page" id="page-experiments">
+        <section class="panel glass">
+          <div class="panel-head"><h3>Experiment Timeline</h3><button class="ghost small" id="reloadExperiments">Reload</button></div>
+          <div id="experimentTimeline" class="timeline"></div>
+        </section>
+      </section>
+
+      <section class="page" id="page-export">
+        <div class="grid two">
+          <section class="panel glass">
+            <div class="panel-head"><h3>Export / Conversion Center</h3><span id="exportCapabilityBadge">checking</span></div>
+            <label>Source checkpoint<input id="exportCheckpoint" placeholder="backend/runs/exp001/best.pt" /></label>
+            <label>Model family<select id="exportFamily"><option value="torch">PyTorch classification/anomaly</option><option value="ultralytics">Ultralytics YOLO / RT-DETR</option></select></label>
+            <label>Export format<select id="exportFormat"><option value="onnx">ONNX</option><option value="torchscript">TorchScript</option><option value="openvino">OpenVINO</option><option value="tensorrt">TensorRT Engine</option></select></label>
+            <label>Precision<select id="exportPrecision"><option value="fp32">FP32</option><option value="fp16">FP16</option></select></label>
+            <div class="form-grid">
+              <label>ONNX opset<input id="exportOpset" type="number" value="17" /></label>
+              <label>Image size<input id="exportImageSize" type="number" value="640" /></label>
+            </div>
+            <label class="checkline"><input id="exportDynamic" type="checkbox" checked /> Dynamic batch for ONNX</label>
+            <div class="actions-row">
+              <button class="primary" id="exportBtn">Run Export</button>
+              <button class="ghost" id="precisionBtn">Convert Precision</button>
+            </div>
+            <div id="exportWarnings" class="warnings"></div>
+          </section>
+          <section class="panel glass">
+            <div class="panel-head"><h3>Export Command Preview</h3><button class="ghost small" id="copyExportCmd">Copy</button></div>
+            <pre class="terminal" id="exportCommand">python -m backend.exporter.export_router --checkpoint backend/runs/exp001/best.pt --format onnx --precision fp32 --imgsz 640</pre>
+            <div class="panel-head sub"><h3>Export Logs</h3><span id="exportStatus">idle</span></div>
+            <pre class="terminal export-log" id="exportLogs">No active export process.</pre>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-config">
+        <div class="grid two">
+          <section class="panel glass">
+            <div class="panel-head"><h3>JSON Config Drawer</h3><span>source of truth</span></div>
+            <textarea id="jsonPreview" spellcheck="false"></textarea>
+            <div class="actions-row">
+              <button class="primary" id="applyJsonBtn">Apply JSON</button>
+              <button class="ghost" id="exportJsonBtn">Export JSON</button>
+              <button class="ghost" id="importJsonBtn">Import JSON</button>
+              <button class="ghost" id="resetJsonBtn">Reset</button>
+            </div>
+            <input type="file" id="importJsonFile" accept=".json" hidden />
+          </section>
+          <section class="panel glass">
+            <div class="panel-head"><h3>Current Config Summary</h3><span id="configState">validating</span></div>
+            <div id="configSummary" class="summary-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
