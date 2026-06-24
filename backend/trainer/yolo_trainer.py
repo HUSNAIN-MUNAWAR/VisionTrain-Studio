@@ -9,7 +9,10 @@ class YoloTrainer(BaseTrainer):
         dataset = self.config.get("dataset", {})
         if self.config.get("task") == "image_classification" or dataset.get("format") == "classification_folder":
             return str(self.dataset_path)
-        return str(Path(dataset.get("yaml") or self.dataset_path / "dataset.yaml"))
+        yaml_path = Path(dataset.get("yaml") or "dataset.yaml").expanduser()
+        if not yaml_path.is_absolute():
+            yaml_path = self.dataset_path / yaml_path
+        return str(yaml_path)
 
     def run(self) -> Dict[str, Any]:
         try:

@@ -417,7 +417,7 @@
       "recommended_batch_cpu": 1,
       "recommended_batch_gpu": 2,
       "status": "supported",
-      "notes": "Real TorchVision detection training starter with COCO-style annotations; full mAP evaluator is roadmap."
+      "notes": "Real TorchVision detection training starter with COCO-style annotations; mAP evaluation is not included in this starter."
     },
     {
       "id": "retinanet-resnet50-fpn",
@@ -439,7 +439,7 @@
       "recommended_batch_cpu": 1,
       "recommended_batch_gpu": 2,
       "status": "supported",
-      "notes": "Real TorchVision detection training starter; full COCO mAP evaluator is roadmap."
+      "notes": "Real TorchVision detection training starter; COCO mAP evaluation is not included in this starter."
     },
     {
       "id": "ssd300-vgg16",

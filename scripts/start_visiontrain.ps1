@@ -46,20 +46,20 @@ if ($UseConda) {
 Write-Stage "Starting FastAPI backend on http://127.0.0.1:8000"
 if ($UseConda) {
     $backendArgs = @("/c", "conda run -n visiontrain uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000 1> `"$BackendLog`" 2>&1")
-    $BackendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $backendArgs -PassThru -WindowStyle Normal
+    $BackendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $backendArgs -PassThru -WindowStyle Hidden
 } else {
     $backendArgs = @("/c", "`"$UvicornCmd`" backend.main:app --reload --host 127.0.0.1 --port 8000 1> `"$BackendLog`" 2>&1")
-    $BackendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $backendArgs -PassThru -WindowStyle Normal
+    $BackendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $backendArgs -PassThru -WindowStyle Hidden
 }
 
 Start-Sleep -Seconds 2
 Write-Stage "Starting frontend static server on http://127.0.0.1:5173"
 if ($UseConda) {
     $frontendArgs = @("/c", "cd /d `"$ProjectRoot\frontend`" && conda run -n visiontrain python -m http.server 5173 --bind 127.0.0.1 1> `"$FrontendLog`" 2>&1")
-    $FrontendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $frontendArgs -PassThru -WindowStyle Normal
+    $FrontendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $frontendArgs -PassThru -WindowStyle Hidden
 } else {
     $frontendArgs = @("/c", "cd /d `"$ProjectRoot\frontend`" && `"$PythonCmd`" -m http.server 5173 --bind 127.0.0.1 1> `"$FrontendLog`" 2>&1")
-    $FrontendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $frontendArgs -PassThru -WindowStyle Normal
+    $FrontendProcess = Start-Process -FilePath "cmd.exe" -ArgumentList $frontendArgs -PassThru -WindowStyle Hidden
 }
 
 $pidFile = Join-Path $ProjectRoot "backend\logs\visiontrain_processes.json"

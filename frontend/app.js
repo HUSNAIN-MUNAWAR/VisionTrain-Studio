@@ -249,8 +249,18 @@ async function pollExport(){ try{ const [s,l]=await Promise.all([api('/api/expor
 async function saveConfig(){ syncInputsToConfig(); try{ const res=await api('/api/save-config',{method:'POST',body:JSON.stringify(state.config)}); toast(`Config saved: ${res.current_path || res.path}`); }catch(err){ toast(err.message); } }
 function exportJson(){ syncInputsToConfig(); const blob=new Blob([JSON.stringify(state.config,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='visiontrain_config.json'; a.click(); URL.revokeObjectURL(a.href); }
 function applyJson(){ try{ state.config=JSON.parse($('jsonPreview').value); fillInputsFromConfig(); refreshCompatibility(); toast('JSON applied'); }catch(err){ toast(`Invalid JSON: ${err.message}`); } }
+function showPage(page, updateHash=true){
+  if(!$(`page-${page}`)) page = 'overview';
+  document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  $(`page-${page}`).classList.add('active');
+  $('pageTitle').textContent = page.charAt(0).toUpperCase()+page.slice(1);
+  if(updateHash && window.location.hash !== `#${page}`) history.replaceState(null, '', `#${page}`);
+  if(page==='experiments') loadExperiments();
+}
 function bind(){
-  document.querySelectorAll('.nav button,[data-page-shortcut]').forEach(b=>b.addEventListener('click',()=>{ const page=b.dataset.page||b.dataset.pageShortcut; document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page)); document.querySelectorAll('.page').forEach(x=>x.classList.remove('active')); $(`page-${page}`).classList.add('active'); $('pageTitle').textContent = page.charAt(0).toUpperCase()+page.slice(1); if(page==='experiments') loadExperiments(); }));
+  document.querySelectorAll('.nav button,[data-page-shortcut]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page||b.dataset.pageShortcut)));
+  window.addEventListener('hashchange',()=>showPage((window.location.hash || '#overview').slice(1), false));
   ['deviceToggle','datasetFormat','epochs','batchSize','imageSize','learningRate','optimizer','scheduler','workers','seed','precision','experimentName','datasetPath','datasetYaml'].forEach(id=>$(id).addEventListener('input',()=>{ syncInputsToConfig(); refreshCompatibility(); }));
   $('refreshBtn').onclick=loadBase; $('validateBtn').onclick=validateDataset; $('startBtn').onclick=startTraining; $('startBtn2').onclick=startTraining; $('stopBtn').onclick=stopTraining; $('saveConfigBtn').onclick=saveConfig;
   $('taskFilter').onchange=renderModels; $('statusFilter').onchange=renderModels; $('reloadExperiments').onclick=loadExperiments;
@@ -261,4 +271,4 @@ function bind(){
   $('applyJsonBtn').onclick=applyJson; $('exportJsonBtn').onclick=exportJson; $('resetJsonBtn').onclick=loadBase; $('importJsonBtn').onclick=()=>$('importJsonFile').click();
   $('importJsonFile').addEventListener('change',async(e)=>{ const f=e.target.files[0]; if(!f) return; const txt=await f.text(); $('jsonPreview').value=txt; applyJson(); });
 }
-bind(); loadBase(); setInterval(pollStatus,1500); setInterval(pollLogs,1000); setInterval(pollExport,2000);
+bind(); showPage((window.location.hash || '#overview').slice(1), false); loadBase(); setInterval(pollStatus,1500); setInterval(pollLogs,1000); setInterval(pollExport,2000);

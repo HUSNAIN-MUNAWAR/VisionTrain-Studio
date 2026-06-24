@@ -41,4 +41,4 @@ VisionTrain does not install TensorRT automatically. Install NVIDIA TensorRT sep
 
 ## Dataset validation fails
 
-Open the Dataset page and check the exact missing paths. The validator returns errors and recommended fixes for YOLO, ImageFolder, semantic masks, COCO, anomaly, and OCR placeholder datasets.
+Open the Dataset page and check the exact missing paths. The validator returns errors and recommended fixes for YOLO, ImageFolder, semantic masks, COCO, anomaly, and OCR image folders.

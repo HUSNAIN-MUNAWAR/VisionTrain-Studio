@@ -40,7 +40,7 @@ def evaluate_model_compatibility(device_mode: str = "cpu", dataset_format: str |
             enabled = False
             reason = "Ultralytics is not installed"
             missing_dependency = "ultralytics"
-        if enabled and family in {"torch", "torchvision", "anomaly"} and not packages.get("torchvision") and family == "torchvision":
+        if enabled and trainer in {"classification_trainer", "segmentation_trainer", "detection_torchvision_trainer", "anomaly_trainer"} and not packages.get("torchvision"):
             enabled = False
             reason = "TorchVision is not installed"
             missing_dependency = "torchvision"
