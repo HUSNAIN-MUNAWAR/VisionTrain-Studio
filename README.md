@@ -10,6 +10,23 @@ VisionTrain Studio is a local computer vision training control center. It gives 
 
 The app runs locally with a static HTML/CSS/JavaScript frontend and a FastAPI backend. Training and export jobs run on your own Python environment.
 
+## Reviewer Quick Path
+
+For a fast job-review pass:
+
+```bash
+python scripts/demo_smoke_check.py
+pytest
+```
+
+The smoke check validates the included demo ImageFolder dataset, writes a demo config, and reports whether the local environment has the packages needed for a one-epoch training proof. After setup, run:
+
+```bash
+python scripts/demo_smoke_check.py --train
+```
+
+More review notes are in [docs/reviewer_guide.md](docs/reviewer_guide.md).
+
 ## Screenshots
 
 ![Dashboard overview](docs/screenshots/dashboard-overview.png)
@@ -55,6 +72,7 @@ flowchart LR
 - Live log polling and experiment history
 - ONNX, Ultralytics, TensorRT-gated, and precision conversion export paths
 - Windows setup and launcher scripts
+- Demo dataset, smoke-check script, and pytest coverage for reviewer verification
 
 ## Supported Training Paths
 
@@ -246,12 +264,17 @@ VisionTrain-Studio/
     architecture.md
     dataset_formats.md
     export_guide.md
+    reviewer_guide.md
     troubleshooting.md
     screenshots/
+  demo/
+    classification_dataset/
   scripts/
     setup_windows.bat
     start_visiontrain.ps1
     stop_visiontrain.ps1
+    demo_smoke_check.py
+  tests/
   .github/workflows/python-checks.yml
   README.md
 ```
@@ -263,6 +286,8 @@ Useful commands before committing changes:
 ```bash
 python -m compileall backend
 python -m backend.trainer.train_router --check-mapping
+python scripts/demo_smoke_check.py
+pytest
 ```
 
-The GitHub workflow also compiles backend modules, validates JSON configs, imports the API, and checks model-to-trainer mapping.
+The GitHub workflow also compiles backend modules, validates JSON configs, imports the API, checks model-to-trainer mapping, and runs pytest.

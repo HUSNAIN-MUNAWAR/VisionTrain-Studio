@@ -22,9 +22,10 @@ def validate_dataset(config: Dict[str, Any]) -> Dict[str, Any]:
     dataset = config.get("dataset", {})
     task = config.get("task", "unknown")
     fmt = dataset.get("format") or config.get("model", {}).get("dataset_format") or "unknown"
-    root = Path(dataset.get("path", "")).expanduser()
+    path_value = str(dataset.get("path", "") or "").strip()
+    root = Path(path_value).expanduser()
     result = _result(task, fmt)
-    if not str(root):
+    if not path_value:
         result["errors"].append("Dataset path is empty.")
         result["recommended_fixes"].append("Set an absolute local dataset path before validating.")
         return result
