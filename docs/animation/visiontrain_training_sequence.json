@@ -72,7 +72,7 @@
     {
       "detail": "The registry points to the real classification trainer and exposes the exact reason launch is enabled or blocked.",
       "id": "model",
-      "metric": "resnet18 \u00b7 PyTorch is not installed",
+      "metric": "resnet18 \u00b7 Ready",
       "short": "Model",
       "status": "gated",
       "title": "ResNet18 enters the registry gate"
@@ -80,9 +80,9 @@
     {
       "detail": "The UI can launch a real trainer only when its declared dependencies are available; this manifest never fabricates loss or accuracy.",
       "id": "training",
-      "metric": "enabled False \u00b7 missing torch",
+      "metric": "enabled True \u00b7 missing none",
       "short": "Train",
-      "status": "blocked",
+      "status": "ready",
       "title": "Training request stays honest"
     },
     {
@@ -98,10 +98,10 @@
   "model": {
     "claim_boundary": "Synthetic image-folder preflight and model registry evidence; no accuracy claim without a completed training run.",
     "compatibility": {
-      "enabled": false,
+      "enabled": true,
       "expected_device": "cpu",
-      "missing_dependency": "torch",
-      "reason": "PyTorch is not installed",
+      "missing_dependency": null,
+      "reason": "Ready",
       "recommended_batch_size": 16,
       "recommended_precision": "fp32"
     },

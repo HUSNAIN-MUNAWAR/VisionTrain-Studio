@@ -1,0 +1,5 @@
+path,ground_truth,predicted,confidence,correct
+demo/classification_dataset/val/bright/bright_1.png,bright,bright,0.7017399668693542,True
+demo/classification_dataset/val/bright/bright_2.png,bright,bright,0.7173836827278137,True
+demo/classification_dataset/val/dark/dark_1.png,dark,dark,0.8874279856681824,True
+demo/classification_dataset/val/dark/dark_2.png,dark,dark,0.9217987060546875,True

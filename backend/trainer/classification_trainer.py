@@ -1,4 +1,5 @@
 from __future__ import annotations
+import random
 from typing import Any, Dict
 from .base_trainer import BaseTrainer, TrainerError
 
@@ -54,6 +55,12 @@ class ClassificationTrainer(BaseTrainer):
             raise TrainerError("Classification dataset must contain train/ and val/ folders.")
 
         train_cfg = self.config.get("training", {})
+        seed = train_cfg.get("seed")
+        if seed is not None:
+            random.seed(int(seed))
+            torch.manual_seed(int(seed))
+            if torch.cuda.is_available():
+                torch.cuda.manual_seed_all(int(seed))
         img_size, batch, workers = int(train_cfg.get("image_size", 224)), int(train_cfg.get("batch_size", 8)), int(train_cfg.get("workers", 4))
         epochs, checkpoint_interval = int(train_cfg.get("epochs", 50)), int(train_cfg.get("checkpoint_interval", 1))
         device = torch.device(self.resolve_torch_device())

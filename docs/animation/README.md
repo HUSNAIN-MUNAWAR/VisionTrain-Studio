@@ -7,3 +7,5 @@ Regenerate after changing dataset validation, hardware profiling, model compatib
 ```bash
 python scripts/generate_training_animation.py
 ```
+
+For actual model evidence after local dependencies are installed, use `scripts/generate_real_runtime_video.py` and review [`REAL_RUNTIME.md`](REAL_RUNTIME.md). That path executes the trainer, reloads the checkpoint, and records per-image validation predictions.

@@ -1,0 +1,12 @@
+[2026-11-22 21:29:38] VisionTrain training request received.
+[2026-11-22 21:29:38] Training command: python -m backend.trainer.train_router --config backend/configs/saved/current_config.json
+[2026-11-22 21:29:38] Dataset validation result: valid=True format=classification_folder images=10
+[2026-11-22 21:29:38] Selected model: ResNet18 | trainer=classification_trainer | task=image_classification
+[2026-11-22 21:29:38] Selected device mode: cpu
+[2026-11-22 21:29:38] Classification trainer selected: ResNet18
+[2026-11-22 21:29:38] Classes: ['bright', 'dark']
+[2026-11-22 21:29:38] Train images: 6 | Val images: 4 | Device: cpu
+[2026-11-22 21:29:39] Epoch 1/1 train_loss=0.25788 train_acc=0.8333 val_loss=0.22180 val_acc=1.0000
+[2026-11-22 21:31:43] Best checkpoint saved: E:\Github Profile Project Enhancment\VisionTrain-Studio\backend\runs\real_runtime\visiontrain_real_runtime\best.pt
+[2026-11-22 21:31:46] Classification training completed. Best val accuracy=1.0000
+[2026-11-22 21:31:48] Training status: completed

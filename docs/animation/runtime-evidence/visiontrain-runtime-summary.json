@@ -1,0 +1,258 @@
+{
+  "_log_file": null,
+  "artifacts": {
+    "dataset_files_csv": {
+      "path": "docs/animation/runtime-evidence/visiontrain-dataset-files.csv",
+      "sha256": "5a28f682dc498c3d2285486890336af4dc6e2650f7d46b361fb5fbd0e2abe5c0"
+    },
+    "poster": {
+      "path": "docs/animation/runtime-evidence/visiontrain-runtime-poster.png",
+      "sha256": "27405f6efb666c6c007c47a3f305a96b413b45321a9933016916c1bc626fc661"
+    },
+    "predictions_csv": {
+      "path": "docs/animation/runtime-evidence/visiontrain-predictions.csv",
+      "sha256": "6b4832722f2915dcf055ad07fa039ad6d22146f4fbbff0f0a97425059b7ca0e4"
+    },
+    "training_log": {
+      "path": "docs/animation/runtime-evidence/visiontrain-training.log",
+      "sha256": "751a7c246a40f349a302d76428d987e7156147fdb9e7b2339da6f03f3f339323"
+    },
+    "video": {
+      "fps": 20,
+      "frames": 256,
+      "path": "docs/animation/runtime-evidence/visiontrain-runtime.mp4",
+      "sha256": "967a7989272f5a7b0a64e828415291d9a191e318b56618dcda3723ab7a73e058"
+    }
+  },
+  "checkpoint": {
+    "bytes": 44783051,
+    "classes": [
+      "bright",
+      "dark"
+    ],
+    "epoch": 1,
+    "parameter_count": 11177538,
+    "path": "backend/runs/real_runtime/visiontrain_real_runtime/best.pt",
+    "sha256": "872d556e35957a377c0cad5b2e6452664ac3e674050f062e344919a5c73bbbe4"
+  },
+  "compatibility": {
+    "enabled": true,
+    "expected_device": "cpu",
+    "id": "resnet18",
+    "missing_dependency": null,
+    "name": "ResNet18",
+    "reason": "Ready",
+    "recommended_precision": "fp32"
+  },
+  "config": {
+    "augmentation": {
+      "color_jitter": false,
+      "horizontal_flip": true,
+      "random_resized_crop": true,
+      "strength": "medium"
+    },
+    "dataset": {
+      "format": "classification_folder",
+      "num_classes": null,
+      "path": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio\\demo\\classification_dataset",
+      "train_split": 0.8,
+      "val_split": 0.2,
+      "yaml": "dataset.yaml"
+    },
+    "device": {
+      "allow_fp16": false,
+      "cuda": false,
+      "gpu_id": 0,
+      "mode": "cpu"
+    },
+    "export": {
+      "checkpoint": "",
+      "dynamic_batch": true,
+      "format": "onnx",
+      "image_size": 640,
+      "opset": 17,
+      "output_dir": "backend/runs/exports",
+      "precision": "fp32"
+    },
+    "logging": {
+      "live_log_poll_seconds": 1,
+      "log_interval": 10,
+      "save_metrics_json": true
+    },
+    "model": {
+      "dataset_format": "classification_folder",
+      "family": "torch",
+      "id": "resnet18",
+      "name": "ResNet18",
+      "trainer": "classification_trainer",
+      "weights": "torchvision"
+    },
+    "optimizer": {
+      "momentum": 0.9,
+      "name": "auto",
+      "weight_decay": 0.0005
+    },
+    "output": {
+      "experiment_name": "visiontrain_real_runtime",
+      "output_dir": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio\\backend\\runs\\real_runtime",
+      "project_name": "visiontrain-runs"
+    },
+    "project": {
+      "description": "Local computer vision training control center",
+      "name": "VisionTrain Studio",
+      "version": "3.0.0-final"
+    },
+    "scheduler": {
+      "enabled": true,
+      "min_lr": 1e-05,
+      "name": "cosine"
+    },
+    "status": {
+      "dataset_valid": false,
+      "last_error": null,
+      "model_enabled": false,
+      "ready_to_train": false
+    },
+    "task": "image_classification",
+    "training": {
+      "batch_size": 2,
+      "checkpoint_interval": 1,
+      "demo_mode": false,
+      "epochs": 1,
+      "image_size": 64,
+      "learning_rate": 0.001,
+      "optimizer": "auto",
+      "patience": 20,
+      "precision": "fp32",
+      "seed": 42,
+      "workers": 0
+    }
+  },
+  "cuda_available": false,
+  "dataset_validation": {
+    "class_count": 2,
+    "dataset_format": "classification_folder",
+    "errors": [],
+    "label_count": 0,
+    "missing_files": [],
+    "recommended_fixes": [],
+    "task": "image_classification",
+    "total_images": 10,
+    "train_image_count": 6,
+    "val_image_count": 4,
+    "valid": true,
+    "warnings": []
+  },
+  "device": "cpu",
+  "python_version": "3.12.10",
+  "runtime_transform": {
+    "train": [
+      "Resize(64,64)",
+      "RandomHorizontalFlip()",
+      "ColorJitter(brightness=0.15, contrast=0.15, saturation=0.1)",
+      "ToTensor()",
+      "Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])"
+    ],
+    "validation": [
+      "Resize(64,64)",
+      "ToTensor()",
+      "Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])"
+    ]
+  },
+  "start_response": {
+    "command": "python -m backend.trainer.train_router --config backend/configs/saved/current_config.json",
+    "message": "Training started with real trainer backend.",
+    "status": "running"
+  },
+  "torch_version": "2.7.1+cpu",
+  "torchvision_version": "0.22.1+cpu",
+  "training_status": {
+    "device_mode": "cpu",
+    "error": null,
+    "finished_at": "2026-11-22T21:31:46",
+    "metrics": {
+      "accuracy": 1.0,
+      "checkpoint": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio\\backend\\runs\\real_runtime\\visiontrain_real_runtime\\best.pt",
+      "epoch": 1,
+      "loss": 0.2218,
+      "score": 1.0,
+      "status": "completed"
+    },
+    "model": {
+      "dataset_format": "classification_folder",
+      "family": "torch",
+      "id": "resnet18",
+      "min_ram_gb": 4,
+      "min_vram_gb": 0,
+      "name": "ResNet18",
+      "notes": "Real PyTorch/TorchVision ImageFolder classification trainer.",
+      "recommended_batch_cpu": 16,
+      "recommended_batch_gpu": 64,
+      "recommended_device": "cpu",
+      "recommended_image_size": 224,
+      "recommended_ram_gb": 8,
+      "recommended_vram_gb": 2,
+      "status": "supported",
+      "supports_cpu": true,
+      "supports_fp16": true,
+      "supports_gpu": true,
+      "task": "image_classification",
+      "trainer": "classification_trainer",
+      "weights": "torchvision"
+    },
+    "running": false,
+    "started_at": "2026-11-22T21:29:38",
+    "status": "completed"
+  },
+  "validation_inference": {
+    "accuracy": 1.0,
+    "correct": 4,
+    "count": 4,
+    "predictions": [
+      {
+        "confidence": 0.7017399668693542,
+        "correct": true,
+        "ground_truth": "bright",
+        "logits": [
+          0.5633550882339478,
+          -0.29224199056625366
+        ],
+        "path": "demo/classification_dataset/val/bright/bright_1.png",
+        "predicted": "bright"
+      },
+      {
+        "confidence": 0.7173836827278137,
+        "correct": true,
+        "ground_truth": "bright",
+        "logits": [
+          0.527041494846344,
+          -0.40447914600372314
+        ],
+        "path": "demo/classification_dataset/val/bright/bright_2.png",
+        "predicted": "bright"
+      },
+      {
+        "confidence": 0.8874279856681824,
+        "correct": true,
+        "ground_truth": "dark",
+        "logits": [
+          -0.9924306869506836,
+          1.0723031759262085
+        ],
+        "path": "demo/classification_dataset/val/dark/dark_1.png",
+        "predicted": "dark"
+      },
+      {
+        "confidence": 0.9217987060546875,
+        "correct": true,
+        "ground_truth": "dark",
+        "logits": [
+          -1.1459379196166992,
+          1.3211036920547485
+        ],
+        "path": "demo/classification_dataset/val/dark/dark_2.png",
+        "predicted": "dark"
+      }
+    ]
+  }
+}
