@@ -1,0 +1,10 @@
+{
+  "fixture_id": "visiontrain-classification-bright-dark",
+  "task": "image_classification",
+  "model_id": "resnet18",
+  "dataset_format": "classification_folder",
+  "image_size": 64,
+  "batch_size": 2,
+  "epochs": 1,
+  "dataset_path": "demo/classification_dataset"
+}

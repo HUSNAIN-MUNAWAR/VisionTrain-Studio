@@ -1,0 +1,141 @@
+{
+  "dataset": {
+    "image_stats": {
+      "classes": {
+        "bright": {
+          "files": 5,
+          "mean_rgb": [
+            246.8,
+            211.0,
+            101.0
+          ],
+          "splits": {
+            "train": 3,
+            "val": 2
+          }
+        },
+        "dark": {
+          "files": 5,
+          "mean_rgb": [
+            56.0,
+            74.0,
+            139.0
+          ],
+          "splits": {
+            "train": 3,
+            "val": 2
+          }
+        }
+      },
+      "mode": "pillow_inspection"
+    },
+    "validation": {
+      "class_count": 2,
+      "dataset_format": "classification_folder",
+      "errors": [],
+      "label_count": 0,
+      "missing_files": [],
+      "recommended_fixes": [],
+      "task": "image_classification",
+      "total_images": 10,
+      "train_image_count": 6,
+      "val_image_count": 4,
+      "valid": true,
+      "warnings": []
+    }
+  },
+  "events": [
+    {
+      "detail": "The real ImageFolder validator scans the committed bright/dark train and validation folders.",
+      "id": "dataset",
+      "metric": "10 images \u00b7 2 classes",
+      "short": "Dataset",
+      "status": "discovered",
+      "title": "Demo images are discovered"
+    },
+    {
+      "detail": "Train/val folders and class names are checked before a training request can start.",
+      "id": "validate",
+      "metric": "valid True \u00b7 train 6 \u00b7 val 4",
+      "short": "Validate",
+      "status": "passed",
+      "title": "Dataset gate passes"
+    },
+    {
+      "detail": "The compatibility service evaluates the selected device, RAM, CUDA, PyTorch, and TorchVision requirements.",
+      "id": "profile",
+      "metric": "device cpu \u00b7 precision fp32",
+      "short": "Profile",
+      "status": "checked",
+      "title": "Hardware and packages are profiled"
+    },
+    {
+      "detail": "The registry points to the real classification trainer and exposes the exact reason launch is enabled or blocked.",
+      "id": "model",
+      "metric": "resnet18 \u00b7 PyTorch is not installed",
+      "short": "Model",
+      "status": "gated",
+      "title": "ResNet18 enters the registry gate"
+    },
+    {
+      "detail": "The UI can launch a real trainer only when its declared dependencies are available; this manifest never fabricates loss or accuracy.",
+      "id": "training",
+      "metric": "enabled False \u00b7 missing torch",
+      "short": "Train",
+      "status": "blocked",
+      "title": "Training request stays honest"
+    },
+    {
+      "detail": "ONNX/TorchScript export is presented as a post-checkpoint stage, not as evidence when no checkpoint exists.",
+      "id": "export",
+      "metric": "checkpoint required \u00b7 no synthetic benchmark",
+      "short": "Export",
+      "status": "deferred",
+      "title": "Export remains downstream"
+    }
+  ],
+  "fixture": "visiontrain-classification-bright-dark",
+  "model": {
+    "claim_boundary": "Synthetic image-folder preflight and model registry evidence; no accuracy claim without a completed training run.",
+    "compatibility": {
+      "enabled": false,
+      "expected_device": "cpu",
+      "missing_dependency": "torch",
+      "reason": "PyTorch is not installed",
+      "recommended_batch_size": 16,
+      "recommended_precision": "fp32"
+    },
+    "compatibility_service": "backend/trainer/model_compatibility.py::evaluate_model_compatibility",
+    "registry": "backend/configs/models.json",
+    "selected": {
+      "dataset_format": "classification_folder",
+      "family": "torch",
+      "id": "resnet18",
+      "min_ram_gb": 4,
+      "min_vram_gb": 0,
+      "name": "ResNet18",
+      "notes": "Real PyTorch/TorchVision ImageFolder classification trainer.",
+      "recommended_batch_cpu": 16,
+      "recommended_batch_gpu": 64,
+      "recommended_device": "cpu",
+      "recommended_image_size": 224,
+      "recommended_ram_gb": 8,
+      "recommended_vram_gb": 2,
+      "status": "supported",
+      "supports_cpu": true,
+      "supports_fp16": true,
+      "supports_gpu": true,
+      "task": "image_classification",
+      "trainer": "classification_trainer",
+      "weights": "torchvision"
+    }
+  },
+  "schema_version": "1.0",
+  "source": {
+    "bytes": 269,
+    "dataset_path": "demo/classification_dataset",
+    "path": "demo/animation_fixture.synthetic.json",
+    "sha256": "eac0b4f06732a6ab8c216dd900970f2486b61b38f669a78217bd2f9874e5654f",
+    "synthetic": true
+  }
+}

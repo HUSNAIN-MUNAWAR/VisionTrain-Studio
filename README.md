@@ -291,3 +291,12 @@ pytest
 ```
 
 The GitHub workflow also compiles backend modules, validates JSON configs, imports the API, checks model-to-trainer mapping, and runs pytest.
+# VisionTrain preflight animation
+
+The repository includes a deterministic synthetic image-folder fixture that drives the real dataset validator, model registry, and compatibility gate:
+
+```bash
+python scripts/generate_training_animation.py
+```
+
+This writes `docs/animation/visiontrain_training_sequence.json` and the dependency-free `frontend/animation/visiontrain-training-reel.html`. The sequence deliberately reports the ResNet18 dependency gate when PyTorch/TorchVision are unavailable; it does not invent training loss, accuracy, checkpoints, or export evidence.
