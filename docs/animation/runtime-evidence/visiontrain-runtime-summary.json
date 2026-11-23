@@ -3,29 +3,29 @@
   "artifacts": {
     "dataset_files_csv": {
       "path": "docs/animation/runtime-evidence/visiontrain-dataset-files.csv",
-      "sha256": "5a28f682dc498c3d2285486890336af4dc6e2650f7d46b361fb5fbd0e2abe5c0"
+      "sha256": "09e3d3f1ee18ad1e8543a5d919a6d86936e0b8a51a1648d6f6929392c89494e5"
     },
     "poster": {
       "path": "docs/animation/runtime-evidence/visiontrain-runtime-poster.png",
-      "sha256": "27405f6efb666c6c007c47a3f305a96b413b45321a9933016916c1bc626fc661"
+      "sha256": "c08d8a3b7ac025f8860d8b66c47b8dd7141b0a5b77bc3c23afc3ec01e6d168b8"
     },
     "predictions_csv": {
       "path": "docs/animation/runtime-evidence/visiontrain-predictions.csv",
-      "sha256": "6b4832722f2915dcf055ad07fa039ad6d22146f4fbbff0f0a97425059b7ca0e4"
+      "sha256": "4be3f54a37efef6fb48daab8025dbb5c4b11f59943c870afec182a52722c2f40"
     },
     "training_log": {
       "path": "docs/animation/runtime-evidence/visiontrain-training.log",
-      "sha256": "751a7c246a40f349a302d76428d987e7156147fdb9e7b2339da6f03f3f339323"
+      "sha256": "ca95e030367921bb3674c086413e5d3e50f0bde045e38c3580bb8e621bc7bf49"
     },
     "video": {
       "fps": 20,
       "frames": 256,
       "path": "docs/animation/runtime-evidence/visiontrain-runtime.mp4",
-      "sha256": "967a7989272f5a7b0a64e828415291d9a191e318b56618dcda3723ab7a73e058"
+      "sha256": "aae4848fa5485b66fdb966285cf8c9c971585eccf78123b01d2b74e22dd9f1d0"
     }
   },
   "checkpoint": {
-    "bytes": 44783051,
+    "bytes": 44783115,
     "classes": [
       "bright",
       "dark"
@@ -33,7 +33,7 @@
     "epoch": 1,
     "parameter_count": 11177538,
     "path": "backend/runs/real_runtime/visiontrain_real_runtime/best.pt",
-    "sha256": "872d556e35957a377c0cad5b2e6452664ac3e674050f062e344919a5c73bbbe4"
+    "sha256": "aafe0af42f1e065f77c4ff56349cd77ec8eb35eb896aed26b5063c48e17abc8f"
   },
   "compatibility": {
     "enabled": true,
@@ -54,7 +54,7 @@
     "dataset": {
       "format": "classification_folder",
       "num_classes": null,
-      "path": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio\\demo\\classification_dataset",
+      "path": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio-live\\demo\\classification_dataset",
       "train_split": 0.8,
       "val_split": 0.2,
       "yaml": "dataset.yaml"
@@ -94,7 +94,7 @@
     },
     "output": {
       "experiment_name": "visiontrain_real_runtime",
-      "output_dir": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio\\backend\\runs\\real_runtime",
+      "output_dir": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio-live\\backend\\runs\\real_runtime",
       "project_name": "visiontrain-runs"
     },
     "project": {
@@ -129,6 +129,12 @@
     }
   },
   "cuda_available": false,
+  "dataset_provenance": {
+    "train_files": 6,
+    "train_val_sha256_overlap": [],
+    "validation_files": 4,
+    "validation_is_byte_disjoint": true
+  },
   "dataset_validation": {
     "class_count": 2,
     "dataset_format": "classification_folder",
@@ -169,12 +175,12 @@
   "training_status": {
     "device_mode": "cpu",
     "error": null,
-    "finished_at": "2026-11-22T21:31:46",
+    "finished_at": "2026-11-23T21:51:01",
     "metrics": {
       "accuracy": 1.0,
-      "checkpoint": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio\\backend\\runs\\real_runtime\\visiontrain_real_runtime\\best.pt",
+      "checkpoint": "E:\\Github Profile Project Enhancment\\VisionTrain-Studio-live\\backend\\runs\\real_runtime\\visiontrain_real_runtime\\best.pt",
       "epoch": 1,
-      "loss": 0.2218,
+      "loss": 0.3156,
       "score": 1.0,
       "status": "completed"
     },
@@ -201,7 +207,7 @@
       "weights": "torchvision"
     },
     "running": false,
-    "started_at": "2026-11-22T21:29:38",
+    "started_at": "2026-11-23T21:50:57",
     "status": "completed"
   },
   "validation_inference": {
@@ -210,45 +216,45 @@
     "count": 4,
     "predictions": [
       {
-        "confidence": 0.7017399668693542,
+        "confidence": 0.5982125401496887,
         "correct": true,
         "ground_truth": "bright",
         "logits": [
-          0.5633550882339478,
-          -0.29224199056625366
+          0.3431265354156494,
+          -0.054896462708711624
         ],
         "path": "demo/classification_dataset/val/bright/bright_1.png",
         "predicted": "bright"
       },
       {
-        "confidence": 0.7173836827278137,
+        "confidence": 0.5794064998626709,
         "correct": true,
         "ground_truth": "bright",
         "logits": [
-          0.527041494846344,
-          -0.40447914600372314
+          0.2585946321487427,
+          -0.0617428794503212
         ],
         "path": "demo/classification_dataset/val/bright/bright_2.png",
         "predicted": "bright"
       },
       {
-        "confidence": 0.8874279856681824,
+        "confidence": 0.9143992066383362,
         "correct": true,
         "ground_truth": "dark",
         "logits": [
-          -0.9924306869506836,
-          1.0723031759262085
+          -1.131744384765625,
+          1.2368289232254028
         ],
         "path": "demo/classification_dataset/val/dark/dark_1.png",
         "predicted": "dark"
       },
       {
-        "confidence": 0.9217987060546875,
+        "confidence": 0.8928349018096924,
         "correct": true,
         "ground_truth": "dark",
         "logits": [
-          -1.1459379196166992,
-          1.3211036920547485
+          -1.0352979898452759,
+          1.0847326517105103
         ],
         "path": "demo/classification_dataset/val/dark/dark_2.png",
         "predicted": "dark"

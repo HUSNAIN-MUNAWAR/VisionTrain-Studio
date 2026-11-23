@@ -100,10 +100,20 @@ def dataset_inventory() -> list[dict[str, Any]]:
     return rows
 
 
+def train_val_hash_overlap(rows: list[dict[str, Any]]) -> list[str]:
+    """Return validation files whose bytes also occur in the training split."""
+    train_hashes = {row["sha256"] for row in rows if row["split"] == "train"}
+    return [row["path"] for row in rows if row["split"] == "val" and row["sha256"] in train_hashes]
+
+
 def train_and_infer() -> dict[str, Any]:
     """Run the app router, load its checkpoint, and measure validation predictions."""
     set_seed(42)
     config = demo_config()
+    inventory = dataset_inventory()
+    overlap = train_val_hash_overlap(inventory)
+    if overlap:
+        raise RuntimeError(f"Refusing to report validation over files duplicated in train: {overlap}")
     validation = validate_dataset(config)
     compatibility = evaluate_model_compatibility(device_mode="cpu", dataset_format="classification_folder")
     selected = next(model for model in compatibility["models"] if model["id"] == "resnet18")
@@ -166,6 +176,12 @@ def train_and_infer() -> dict[str, Any]:
         "cuda_available": bool(torch.cuda.is_available()),
         "config": config,
         "dataset_validation": validation,
+        "dataset_provenance": {
+            "train_files": sum(1 for row in inventory if row["split"] == "train"),
+            "validation_files": sum(1 for row in inventory if row["split"] == "val"),
+            "train_val_sha256_overlap": overlap,
+            "validation_is_byte_disjoint": not overlap,
+        },
         "compatibility": {key: selected.get(key) for key in ("id", "name", "enabled", "reason", "missing_dependency", "expected_device", "recommended_precision")},
         "start_response": start_response,
         "training_status": status,

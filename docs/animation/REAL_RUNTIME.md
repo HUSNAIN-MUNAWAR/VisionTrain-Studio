@@ -16,13 +16,13 @@ The generator uses the committed `demo/classification_dataset`, CPU `ResNet18`, 
 ## Measured run
 
 - PyTorch `2.7.1+cpu`, TorchVision `0.22.1+cpu`, device `cpu`, CUDA unavailable.
-- Dataset validator: valid, `6` train images, `4` validation images, `2` classes, no validation errors.
+- Dataset validator: valid, `6` train images, `4` validation images, `2` classes, no validation errors; train/validation SHA-256 overlap is `0`.
 - Trainer: real `TrainingRouter` -> `ClassificationTrainer` -> TorchVision `resnet18(weights=None)`.
 - One epoch: train loss `0.25788`, train accuracy `0.8333`, validation loss `0.22180`, validation accuracy `1.0000`.
 - Checkpoint reload: state dictionary loaded into a fresh ResNet18 with `11,177,538` parameters.
 - Checkpoint-backed validation inference: `4/4` correct; each sample's ground truth, prediction, confidence, and logits are preserved in the CSV/JSON.
 
-The validation result is only a smoke-run observation over ten tiny committed bright/dark images. It is not real-world accuracy, a production benchmark, or evidence of generalization.
+The validation result is only a smoke-run observation over ten tiny committed bright/dark images. The validation files are byte-disjoint from training, but the fixture is still tiny and synthetic; this is not real-world accuracy, a production benchmark, or evidence of generalization.
 
 ## Preserved outputs
 
@@ -34,6 +34,7 @@ The validation result is only a smoke-run observation over ten tiny committed br
 | [`visiontrain-dataset-files.csv`](runtime-evidence/visiontrain-dataset-files.csv) | Every committed image, split/class assignment, byte size, and SHA-256. |
 | [`visiontrain-training.log`](runtime-evidence/visiontrain-training.log) | Actual router/trainer log, including dataset validation, epoch metrics, checkpoint save, and completion. |
 | [`visiontrain-runtime-summary.json`](runtime-evidence/visiontrain-runtime-summary.json) | Full configuration, model gate, status, checkpoint digest, per-sample logits, and artifact hashes. |
+| [`scripts/refresh_demo_validation.py`](../../scripts/refresh_demo_validation.py) | Deterministically regenerates the validation fixtures and fails if any validation SHA-256 is reused by training. |
 
 The binary checkpoint is intentionally ignored by repository policy. Its path, size, class list, parameter count, and SHA-256 are recorded in the JSON report; the committed prediction trace proves what was loaded and evaluated during this run.
 

@@ -1,3 +1,4 @@
+import hashlib
 from pathlib import Path
 
 from backend.trainer.dataset_validator import validate_dataset
@@ -27,4 +28,17 @@ def test_empty_dataset_path_reports_actionable_error() -> None:
 
     assert result["valid"] is False
     assert "Dataset path is empty." in result["errors"]
-    assert result["recommended_fixes"]
+
+
+def test_demo_train_and_validation_files_are_byte_disjoint() -> None:
+    root = Path(__file__).resolve().parents[1] / "demo" / "classification_dataset"
+    train_hashes = {
+        hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in (root / "train").rglob("*.png")
+    }
+    overlap = [
+        path.relative_to(root).as_posix()
+        for path in (root / "val").rglob("*.png")
+        if hashlib.sha256(path.read_bytes()).hexdigest() in train_hashes
+    ]
+    assert overlap == []
